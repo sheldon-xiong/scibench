@@ -1,0 +1,6 @@
+[submodule "device_test/nccl_test/nccl-tests"]
+	path = device_test/nccl_test/nccl-tests
+	url = https://github.com/NVIDIA/nccl-tests.git
+[submodule "device_test/bandwidthTest/cuda-samples"]
+	path = device_test/bandwidthTest/cuda-samples
+	url = https://github.com/NVIDIA/cuda-samples.git
