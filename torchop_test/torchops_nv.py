@@ -6,7 +6,8 @@ WARMUP = 50
 REPEAT = 500
 def measure(func, inputs):
     for _ in range(WARMUP):
-        outputs = func(*inputs)torch.cuda.synchronize()
+        outputs = func(*inputs)
+    torch.cuda.synchronize()
 
     start = torch.cuda.Event(enable_timing=True)
     end = torch.cuda.Event(enable_timing=True)
@@ -54,19 +55,19 @@ def lstm_test(input_size=1000, hidden_size=512, num_layers=3, sequence_length=24
     # tf32
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
-    lstm = nn.LSTM(input_size,_hidden_size, num_layers).cuda()
+    lstm = nn.LSTM(input_size, hidden_size, num_layers).cuda()
     input_data_fp32 = input_data.cuda().to(torch.float32)
     time_elapsed_tf32 = measure(lstm, (input_data_fp32,))
     torch.backends.cuda.matmul.allow_tf32 = False
-    torch.backends.cudnn.allow tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
     print(f"LSTM-tf32: {time_elapsed_tf32:.4f} ms")
     # fp16
-    lstm = nn.LSTM(input_size, hidden_size, num_layerss).cuda().half()
+    lstm = nn.LSTM(input_size, hidden_size, num_layers).cuda().half()
     input_data_fp16 = input_data.cuda().to(torch.half)
     time_elapsed_fp16 = measure(lstm, (input_data_fp16,))
     print(f"LSTM-fp16: {time_elapsed_fp16:.4f} ms")
 
-def linear_test(in_features=1024,_out_features=512, batch_sizze=5000):
+def linear_test(in_features=1024, out_features=512, batch_size=5000):
     data_shape = (batch_size, in_features)
     input_data = torch.rand(data_shape).cuda()
     # fp32
@@ -78,13 +79,13 @@ def linear_test(in_features=1024,_out_features=512, batch_sizze=5000):
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
     linear fn = nn.Linear(in_features, out_features).cuda()
-    input_data_fp32 = input data.cuda().to(torch.float32)
+    input_data_fp32 = input_data.cuda().to(torch.float32)
     time_elapsed_tf32 = measure(linear_fn, (input_data_fp32,))
     print(f"Linear-tf32: {time_elapsed_tf32:.4f} ms")
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     #fp16
-    linear_fn = nn.Linear(in_features, out_features).cuda()half()
+    linear_fn = nn.Linear(in_features, out_features).cuda().half()
     input_data_fp16 = input_data.cuda().to(torch.half)
     time_elapsed_fp16 = measure(linear_fn, (input_data_fp16,))
     print(f"Linear-fp16: {time_elapsed_fp16:.4f} ms")
