@@ -39,8 +39,8 @@ function torchoptestnv {
 	python $testdir/torchop_test/torchops_nv.py
 }
 
-function torchoptestnv {
-	echo "Run PyTorch operator tests on Nvidia GPUs"
+function torchoptesthw {
+	echo "Run PyTorch operator tests on Ascend devices"
 	python $testdir/torchop_test/torchops_hw.py
 }
 
@@ -68,7 +68,6 @@ elif [ "$devicetype" == "hw" ]; then
 		echo "Only 'device', 'torchop' and 'all' is supported"
                 echo "$testtype" is not supported
 	fi
-    echo "Run tests on HW device"
 else
     echo "Only NV(nv) and HW(hw) is supported"
     echo "$devicetype" is not supported.
