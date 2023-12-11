@@ -78,7 +78,7 @@ def linear_test(in_features=1024, out_features=512, batch_size=5000):
     #tf32
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
-    linear fn = nn.Linear(in_features, out_features).cuda()
+    linear_fn = nn.Linear(in_features, out_features).cuda()
     input_data_fp32 = input_data.cuda().to(torch.float32)
     time_elapsed_tf32 = measure(linear_fn, (input_data_fp32,))
     print(f"Linear-tf32: {time_elapsed_tf32:.4f} ms")
