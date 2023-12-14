@@ -10,38 +10,38 @@ testtype=$2
 function devicetestnv {
 	echo "Run device tests on Nvidia GPUS"
 	echo "=========== cublasMatmulBench ============="
-	bash $testdir/device_test/cublasMatmulBench/run.bash
+	bash $testdir/device_test/nv/cublasMatmulBench/run.bash
 	echo "============== stream_test ================"
-	bash $testdir/device_test/stream_test/run.bash
+	bash $testdir/device_test/nv/stream_test/run.bash
 	echo "============= bandwidthTest ==============="
-	bash $testdir/device_test/bandwidthTest/run.bash
+	bash $testdir/device_test/nv/bandwidthTest/run.bash
 	echo "=============== nccl_test ================="
-	bash $testdir/device_test/nccl_test/run.bash
+	bash $testdir/device_test/nv/nccl_test/run.bash
 	echo "==========================================="
 }
 
 function devicetesthw {
 	echo “Run device tests on Ascend devices”
 	echo "============== GemmBench =================="
-	ascend-dmi -f -t fp32 -d 0
-	ascend-dmi -f -t fp16 -d 0
+	ascend-dmi -f -t fp32 -d 0 2>&1 | tee $testdir/device_test/hw/gemm_fp32.log
+	ascend-dmi -f -t fp16 -d 0 2>&1 | tee $testdir/device_test/hw/gemm_fp16.log
 	echo "============ PCIE Bandwidth ==============="
-	ascend-dmi --bw -t h2d -d 0 -s 536870912 --et 100
-	ascend-dmi --bw -t d2h -d 0 -s 536870912 --et 100
+	ascend-dmi --bw -t h2d -d 0 -s 536870912 --et 100 2>&1 | tee $testdir/device_test/hw/pcie_bw_h2d.log
+	ascend-dmi --bw -t d2h -d 0 -s 536870912 --et 100 2>&1 | tee $testdir/device_test/hw/pcie_bw_d2h.log
 	echo "========= Device Memory Bandwidth ========="
-	ascend-dmi --bw -t d2d -d 0
+	ascend-dmi --bw -t d2d -d 0 2>&1 | tee $testdir/device_test/hw/device_bw_d2d.log
 	echo "============= P2P Bandwidth ==============="
-	ascend-dmi --bw -t p2p
+	ascend-dmi --bw -t p2p | tee $testdir/device_test/hw/p2p_bw.log
 }
 
 function torchoptestnv {
 	echo "Run PyTorch operator tests on Nvidia GPUs"
-	python $testdir/torchop_test/torchops_nv.py
+	python $testdir/torchop_test/torchops_nv.py 2>&1 | tee $testdir/torchop_test/torchop_nv.log
 }
 
 function torchoptesthw {
 	echo "Run PyTorch operator tests on Ascend devices"
-	python $testdir/torchop_test/torchops_hw.py
+	python $testdir/torchop_test/torchops_hw.py 2>&1 | tee $testdir/torchop_test/torchop_hw.log
 }
 
 if [ "$devicetype" == "nv" ]; then

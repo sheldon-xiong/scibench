@@ -1,5 +1,6 @@
 import torch 
 import torch.nn as nn
+import torch_npu
 
 # lstm
 WARMUP = 50
@@ -91,6 +92,6 @@ def linear_test(in_features=1024, out_features=512, batch_size=5000):
     print(f"Linear-fp16: {time_elapsed_fp16:.4f} ms")
 
 if __name__ == "__main__":
-    lstmcell_test()
     lstm_test()
     linear_test()
+    lstmcell_test()
