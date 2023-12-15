@@ -21,7 +21,7 @@ function devicetestnv {
 }
 
 function devicetesthw {
-	echo “Run device tests on Ascend devices”
+	echo "Run device tests on Ascend devices"
 	echo "============== GemmBench =================="
 	ascend-dmi -f -t fp32 -d 0 2>&1 | tee $testdir/device_test/hw/gemm_fp32.log
 	ascend-dmi -f -t fp16 -d 0 2>&1 | tee $testdir/device_test/hw/gemm_fp16.log
@@ -44,16 +44,24 @@ function torchoptesthw {
 	python $testdir/torchop_test/torchops_hw.py 2>&1 | tee $testdir/torchop_test/torchop_hw.log
 }
 
+function ext_libnv {
+	echo "Run ext_lib tests"
+	bash $testdir/ext_lib_test/nv/cupy_test/run.bash 2>&1 | tee $testdir/ext_lib_test/nv/ext_lib_nv.log
+}
+
 if [ "$devicetype" == "nv" ]; then
 	if [ "$testtype" == "device" ]; then
 		devicetestnv
 	elif [ "$testtype" == "torchop" ]; then
 		torchoptestnv
+	elif [ "$testtype" == "ext_lib" ]; then
+		ext_libnv
 	elif [ "$testtype" == "all" ]; then
 		devicetestnv
 		torchoptestnv
+		lib_versionnv
 	else
-		echo "Only 'device', 'torchop' and 'all' is supported"
+		echo "Only 'device', 'torchop', 'lib_version' and 'all' is supported"
 		echo "$testtype" is not supported
 	fi
 elif [ "$devicetype" == "hw" ]; then
