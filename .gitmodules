@@ -5,5 +5,5 @@
 	path = device_test/bandwidthTest/cuda-samples
 	url = https://github.com/NVIDIA/cuda-samples.git
 [submodule "cupy_test/cupy"]
-	path = cupy_test/cupy
+	path = ext_lib_test/nv/cupy_test/cupy
 	url = https://github.com/cupy/cupy.git
