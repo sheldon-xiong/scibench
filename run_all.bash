@@ -44,9 +44,19 @@ function torchoptesthw {
 	python $testdir/torchop_test/torchops_hw.py 2>&1 | tee $testdir/torchop_test/torchop_hw.log
 }
 
+function modeltestnv {
+	echo "Run PyTorch model tests on Nvidia GPUs"
+	bash $testdir/model_test/run.bash nv
+}
+
+function modeltesthw {
+	echo "Run PyTorch model tests on Ascend devices"
+	bash $testdir/model_test/run.bash hw
+}
+
 function ext_libnv {
 	echo "Run ext_lib tests"
-	bash $testdir/ext_lib_test/nv/cupy_test/run.bash 2>&1 | tee $testdir/ext_lib_test/nv/ext_lib_nv.log
+	bash $testdir/ext_lib_test/nv/run.bash 2>&1 | tee $testdir/ext_lib_test/result/ext_lib_nv.log
 }
 
 if [ "$devicetype" == "nv" ]; then
@@ -56,12 +66,15 @@ if [ "$devicetype" == "nv" ]; then
 		torchoptestnv
 	elif [ "$testtype" == "ext_lib" ]; then
 		ext_libnv
+	elif [ "$testtype" == "model_test" ]; then
+		modeltestnv
 	elif [ "$testtype" == "all" ]; then
 		devicetestnv
 		torchoptestnv
-		lib_versionnv
+		modeltestnv
+		ext_libnv
 	else
-		echo "Only 'device', 'torchop', 'lib_version' and 'all' is supported"
+		echo "Only 'device', 'torchop', 'model_test', 'ext_lib' and 'all' is supported"
 		echo "$testtype" is not supported
 	fi
 elif [ "$devicetype" == "hw" ]; then
@@ -69,11 +82,14 @@ elif [ "$devicetype" == "hw" ]; then
 		devicetesthw
 	elif [ "$testtype" == "torchop" ]; then
 		torchoptesthw
+	elif [ "$testtype" == "model_test" ]; then
+		modeltesthw
 	elif [ "$testtype" == "all" ]; then
 		devicetesthw
 		torchoptesthw
+		modeltesthw
 	else
-		echo "Only 'device', 'torchop' and 'all' is supported"
+		echo "Only 'device', 'torchop', 'model_test' and 'all' is supported"
                 echo "$testtype" is not supported
 	fi
 else

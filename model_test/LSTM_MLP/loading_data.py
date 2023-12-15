@@ -32,7 +32,7 @@ def load_FD001(cut):
     """
     # load data FD001.py
     # define filepath to read data
-    dir_path = './LSTM_MLP/CMAPSSData/'
+    dir_path = './CMAPSSData/'
 
     # define column names for easy indexing
     index_names = ['unit_nr', 'time_cycles']

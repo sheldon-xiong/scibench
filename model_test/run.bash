@@ -23,8 +23,9 @@ if [ "$devicetype" == "nv" ]; then
     fi
 elif [ "$devicetype" == "hw" ]; then
     # LSTM_MLP
-    python3 $testdir/LSTM_MLP/train_hw.py --precision fp16 2>&1 >& $resultdir/hw_fp16.log
-    python3 $testdir/LSTM_MLP/train_hw.py --precision fp32 2>&1 >& $resultdir/hw_fp32.log
+    cd $testdir/LSTM_MLP
+    python3 train_hw.py --precision fp16 2>&1 >& $resultdir/hw_fp16.log
+    python3 train_hw.py --precision fp32 2>&1 >& $resultdir/hw_fp32.log
     rfp32=$(grep "avg epoch training time"  $resultdir/hw_fp32.log | awk -F' ' '{print $5}' )
     rfp16=$(grep "avg epoch training time"  $resultdir/hw_fp16.log | awk -F' ' '{print $5}' )
     if [ -n "$rfp32" ]; then
