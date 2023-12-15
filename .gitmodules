@@ -1,9 +1,9 @@
-[submodule "device_test/nccl_test/nccl-tests"]
-	path = device_test/nccl_test/nccl-tests
-	url = https://github.com/NVIDIA/nccl-tests.git
-[submodule "device_test/bandwidthTest/cuda-samples"]
-	path = device_test/bandwidthTest/cuda-samples
+[submodule "device_test/nv/bandwidthTest/cuda-samples"]
+	path = device_test/nv/bandwidthTest/cuda-samples
 	url = https://github.com/NVIDIA/cuda-samples.git
-[submodule "cupy_test/cupy"]
+[submodule "device_test/nv/nccl_test/nccl-tests"]
+	path = device_test/nv/nccl_test/nccl-tests
+	url = https://github.com/NVIDIA/nccl-tests.git
+[submodule "ext_lib_test/nv/cupy_test/cupy"]
 	path = ext_lib_test/nv/cupy_test/cupy
 	url = https://github.com/cupy/cupy.git
