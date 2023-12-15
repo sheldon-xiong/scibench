@@ -56,7 +56,7 @@ function modeltesthw {
 
 function ext_libnv {
 	echo "Run ext_lib tests"
-	bash $testdir/ext_lib_test/nv/run.bash 2>&1 | tee $testdir/ext_lib_test/result/ext_lib_nv.log
+	bash $testdir/ext_lib_test/nv/run.bash
 }
 
 if [ "$devicetype" == "nv" ]; then
