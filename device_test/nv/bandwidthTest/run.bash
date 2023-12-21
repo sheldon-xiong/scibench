@@ -3,7 +3,7 @@
 curdir=$(pwd)
 testdir=$(cd "$(dirname $0)"; pwd)
 bandwidthtestdir=$testdir/cuda-samples/Samples/1_Utilities/bandwidthTest/
-ip2ptestdir=$testdir/cuda-samples/Samples/0_Introduction/simpleP2P/
+p2ptestdir=$testdir/cuda-samples/Samples/0_Introduction/simpleP2P/
 resultdir=$testdir/result
 if [ ! -d $resultdir ]; then
 	mkdir -p $resultdir

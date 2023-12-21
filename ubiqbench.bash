@@ -149,7 +149,7 @@ elif [ "$device_type" == "hw" ]; then
 		hw_device_test $test_case
 	elif [ "$test_type" == "torchop" ]; then
 		hw_torchop_test
-	elif [ "$test_type" == "model" ]; the
+	elif [ "$test_type" == "model" ]; then
 		hw_model_test
 	elif [ "$test_type" == "all" ]; then
 		hw_device_test "all"
