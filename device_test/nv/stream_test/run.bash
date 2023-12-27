@@ -7,7 +7,7 @@ if [ ! -d $resultdir ]; then
 fi
 
 # run test
-$testdir/stream_vectorized_double_test -n1308622848 >& $resultdir/result_stream_vectorized_double_test
+$testdir/stream_vectorized_double_test -n608622848 >& $resultdir/result_stream_vectorized_double_test
 # parse result
 rcopy=$(grep   "Copy:"  $resultdir/result_stream_vectorized_double_test | awk -F' ' '{print $2}')
 rscale=$(grep  "Scale:" $resultdir/result_stream_vectorized_double_test | awk -F' ' '{print $2}')
