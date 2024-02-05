@@ -23,9 +23,9 @@ def measure(func, inputs):
     start.record()
     for i in range(REPEAT):
         outputs = func(*inputs)
-        end.record()
-        torch.cuda.synchronize()
-        total_time = start.elapsed_time(end)
+    end.record()
+    torch.cuda.synchronize()
+    total_time = start.elapsed_time(end)
     return total_time / REPEAT
    
 def lstmcell_test(input_size=1000, hidden_size=512, batch_size=50000):
@@ -56,7 +56,7 @@ def lstm_test(input_size=1000, hidden_size=512, num_layers=3, sequence_length=24
     time_elapsed_fp16 = measure(lstm, (input_data_fp16,))
     print(f"LSTM-fp16: {time_elapsed_fp16:.4f} ms")
 
-def linear_test(in_features=1024, out_features=512, batch_size=5000):
+def linear_test(in_features=2048, out_features=2048, batch_size=5000):
     data_shape = (batch_size, in_features)
     input_data = torch.rand(data_shape).cuda()
     # fp32
