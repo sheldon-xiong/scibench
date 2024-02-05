@@ -3,18 +3,18 @@
 curdir=$(pwd)
 testdir=$(cd "$(dirname $0)"; pwd)
 bandwidthtestdir=$testdir/cuda-samples/Samples/1_Utilities/bandwidthTest/
-ip2ptestdir=$testdir/cuda-samples/Samples/0_Introduction/simpleP2P/
+p2ptestdir=$testdir/cuda-samples/Samples/0_Introduction/simpleP2P/
 resultdir=$testdir/result
 if [ ! -d $resultdir ]; then
 	mkdir -p $resultdir
 fi
 
 # run test
-cd $bandwidthtestdir && make >& $resultdir/make_bandwidth.log && ./bandwidthTest >& $resultdir/result_bandwidthTest
+cd $bandwidthtestdir && make >& $resultdir/make_bandwidth.log && ./bandwidthTest --start=1000000000 --end=1000000000 --increment=4 --mode=range >& $resultdir/result_bandwidthTest
 cd $p2ptestdir && make >& $resultdir/make_p2p.log && ./simpleP2P >& $resultdir/result_p2p
 
 # process result
-mapfile -t res < <(grep 32000000 $resultdir/result_bandwidthTest | awk -F' ' '{print $2}')
+mapfile -t res < <(grep 1000000000 $resultdir/result_bandwidthTest | awk -F' ' '{print $2}')
 
 # print results
 if [ -n "${res[0]}" ]; then

@@ -1,6 +1,6 @@
 """Loading data sets"""
 import pandas as pd
-
+import os
 
 def add_rul_1(df):
     """
@@ -32,7 +32,7 @@ def load_FD001(cut):
     """
     # load data FD001.py
     # define filepath to read data
-    dir_path = './CMAPSSData/'
+    dir_path = f'{os.path.dirname(os.path.realpath(__file__))}/CMAPSSData/'
 
     # define column names for easy indexing
     index_names = ['unit_nr', 'time_cycles']
